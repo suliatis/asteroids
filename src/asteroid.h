@@ -4,9 +4,9 @@
 #include "raylib.h"
 
 typedef enum AsteroidSize {
-  SMALL = 1,
-  MEDIUM = 2,
-  LARGE = 3
+  ASTEROID_SMALL = 1,
+  ASTEROID_MEDIUM = 2,
+  ASTEROID_LARGE = 3
 } AsteroidSize;
 
 typedef struct Asteroid {
@@ -19,5 +19,7 @@ typedef struct Asteroid {
 } Asteroid;
 
 Asteroid CreateAsteroid(AsteroidSize size, Vector2 position, Vector2 velocity);
-void UpdateAsteroid(Asteroid* asteroid, float deltaTime);
+void UpdateAsteroid(Asteroid *asteroid, float deltaTime);
+void DrawAsteroid(Asteroid* asteroid);
+
 #endif
