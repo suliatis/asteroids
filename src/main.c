@@ -6,6 +6,8 @@
   CLITERAL(Color) { 15, 15, 15, 255 }
 
 #define MAX_ASTEROIDS 64
+AsteroidSize _asteroidSizes[] = {ASTEROID_SMALL, ASTEROID_MEDIUM,
+                                 ASTEROID_LARGE};
 Asteroid _asteroids[MAX_ASTEROIDS] = {0};
 
 void Init(void) {
@@ -41,8 +43,8 @@ void AddAsteroid(void) {
     if (_asteroids[i].active) {
       continue;
     }
-    _asteroids[i] =
-        CreateAsteroid(ASTEROID_SMALL, GetMousePosition(), (Vector2){200, 0});
+    _asteroids[i] = CreateAsteroid(_asteroidSizes[GetRandomValue(0, 2)],
+                                   GetMousePosition(), (Vector2){200, 0});
     created = true;
     break;
   }
