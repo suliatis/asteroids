@@ -1,6 +1,12 @@
 default: help
 
-init: ## Init build
+init: build lsp ## Init project
+
+clean: ## Clean build
+	rm -rf build
+	rm -rf .cache
+
+build: ## Init build
 	cmake -B build && cmake --build build
 
 lsp: ## Setup LSP
