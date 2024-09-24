@@ -35,19 +35,29 @@ void Draw(void) {
   EndDrawing();
 }
 
+void AddAsteroid(void) {
+  bool created = false;
+  for (int i = 0; i < MAX_ASTEROIDS; i++) {
+    if (_asteroids[i].active) {
+      continue;
+    }
+    _asteroids[i] =
+        CreateAsteroid(ASTEROID_SMALL, GetMousePosition(), (Vector2){200, 0});
+    created = true;
+    break;
+  }
+
+  if (!created) {
+    TraceLog(LOG_ERROR, "Can't create more asteroids");
+  }
+}
+
 int main(void) {
   Init();
 
   while (!WindowShouldClose()) {
     if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-      for (int i = 0; i < MAX_ASTEROIDS; i++) {
-        if (_asteroids[i].active) {
-          continue;
-        }
-        _asteroids[i] = CreateAsteroid(ASTEROID_SMALL, GetMousePosition(),
-                                       (Vector2){200, 0});
-        break;
-      }
+      AddAsteroid();
     }
     Update();
     Draw();
