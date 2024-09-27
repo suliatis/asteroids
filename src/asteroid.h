@@ -9,6 +9,8 @@ typedef enum AsteroidSize {
   ASTEROID_LARGE = 3
 } AsteroidSize;
 
+AsteroidSize GetRandomAsteroidSize(void);
+
 typedef struct Asteroid {
   bool active;
   AsteroidSize size;
@@ -21,5 +23,7 @@ typedef struct Asteroid {
 Asteroid CreateAsteroid(AsteroidSize size, Vector2 position, Vector2 velocity);
 void UpdateAsteroid(Asteroid *asteroid, float deltaTime);
 void DrawAsteroid(Asteroid* asteroid);
+
+Vector2 GetRandomAsteroidVelocity(Vector2 position, Vector2 target);
 
 #endif

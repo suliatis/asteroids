@@ -6,6 +6,14 @@
 #define ASTEROID_ROTATION_SPEED_MIN 5
 #define ASTEROID_ROTATION_SPEED_MAX 240
 
+#define ASTEROID_MIN_SPEED 100
+#define ASTEROID_MAX_SPEED 300
+#define ASTEROID_ANGLE_OFFSET 30
+
+AsteroidSize GetRandomAsteroidSize(void) {
+  return (AsteroidSize)GetRandomValue(1, 3);
+}
+
 Asteroid CreateAsteroid(AsteroidSize size, Vector2 position, Vector2 velocity) {
   return (Asteroid){
       .active = true,
@@ -28,9 +36,20 @@ void UpdateAsteroid(Asteroid *asteroid, float deltaTime) {
   asteroid->rotation += asteroid->rotationSpeed * deltaTime;
 }
 
-void DrawAsteroid(Asteroid* asteroid) {
+void DrawAsteroid(Asteroid *asteroid) {
   if (!asteroid->active) {
     return;
   }
-  DrawPolyLines(asteroid->position, 3, 16 * (int)asteroid->size, asteroid->rotation, WHITE);
+  DrawPolyLines(asteroid->position, 3, 16 * (int)asteroid->size,
+                asteroid->rotation, WHITE);
+}
+
+Vector2 GetRandomAsteroidVelocity(Vector2 position, Vector2 target) {
+  Vector2 direction = Vector2Normalize(Vector2Subtract(target, position));
+  Vector2 velocity = Vector2Scale(
+      direction, GetRandomValue(ASTEROID_MIN_SPEED, ASTEROID_MAX_SPEED));
+  Vector2 offsetVelocity = Vector2Rotate(
+      velocity,
+      GetRandomValue(-ASTEROID_ANGLE_OFFSET, ASTEROID_ANGLE_OFFSET) * DEG2RAD);
+  return offsetVelocity;
 }

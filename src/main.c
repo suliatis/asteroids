@@ -6,21 +6,17 @@
 #define NEARBLACK                                                              \
   CLITERAL(Color) { 15, 15, 15, 255 }
 
+#define SCREEN_SIZE CLITERAL(Vector2) {800, 450}
+#define SCREEN_CENTER Vector2Scale(SCREEN_SIZE, 0.5f)
+
 #define MAX_ASTEROIDS 64
-#define MAX_TRAJECTORY_ANGLE 30
-
-const int screenWidth = 800;
-const int screenHeight = 450;
-const Vector2 screenSize = {screenWidth, screenHeight};
-const Vector2 screenCenter = {screenWidth / 2, screenHeight / 2};
-
 AsteroidSize _asteroidSizes[] = {ASTEROID_SMALL, ASTEROID_MEDIUM,
                                  ASTEROID_LARGE};
 Asteroid _asteroids[MAX_ASTEROIDS] = {0};
 
 void Init(void) {
 
-  InitWindow(screenWidth, screenHeight, "Asteroids");
+  InitWindow(SCREEN_SIZE.x, SCREEN_SIZE.y, "Asteroids");
 
   SetTargetFPS(60);
 }
@@ -51,20 +47,16 @@ void AddAsteroid(void) {
     }
 
     Vector2 position = GetMousePosition();
-    Vector2 velocity = Vector2Subtract(screenCenter, position);
-    velocity =
-        Vector2Scale(Vector2Normalize(velocity), GetRandomValue(100, 300));
-    velocity = Vector2Rotate(
-        velocity, GetRandomValue(-MAX_TRAJECTORY_ANGLE, MAX_TRAJECTORY_ANGLE) * DEG2RAD);
+    Vector2 velocity = GetRandomAsteroidVelocity(position, SCREEN_CENTER);
+    AsteroidSize size = GetRandomAsteroidSize();
 
-    _asteroids[i] = CreateAsteroid(_asteroidSizes[GetRandomValue(0, 2)],
-                                   position, velocity);
+    _asteroids[i] = CreateAsteroid(size, position, velocity);
     created = true;
     break;
   }
 
   if (!created) {
-    TraceLog(LOG_ERROR, "Can't create more asteroids");
+    TraceLog(LOG_ERROR, "Can't create more asteroids!");
   }
 }
 
