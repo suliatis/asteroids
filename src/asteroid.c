@@ -36,12 +36,13 @@ void UpdateAsteroid(Asteroid *asteroid, float deltaTime) {
   asteroid->rotation += asteroid->rotationSpeed * deltaTime;
 }
 
-void DrawAsteroid(Asteroid *asteroid) {
-  if (!asteroid->active) {
+void DrawAsteroid(Asteroid asteroid) {
+  if (!asteroid.active) {
     return;
   }
-  DrawPolyLines(asteroid->position, 3, 16 * (int)asteroid->size,
-                asteroid->rotation, WHITE);
+  DrawPolyLines(asteroid.position, 3, 16 * (int)asteroid.size,
+                asteroid.rotation, WHITE);
+}
 }
 
 Vector2 GetRandomAsteroidVelocity(Vector2 position, Vector2 target) {

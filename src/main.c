@@ -33,7 +33,7 @@ void Draw(void) {
   ClearBackground(NEARBLACK);
 
   for (int i = 0; i < MAX_ASTEROIDS; i++) {
-    DrawAsteroid(&_asteroids[i]);
+    DrawAsteroid(_asteroids[i]);
   }
 
   EndDrawing();
