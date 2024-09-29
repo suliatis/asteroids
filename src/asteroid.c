@@ -18,6 +18,7 @@ Asteroid CreateAsteroid(AsteroidSize size, Vector2 position, Vector2 velocity) {
   return (Asteroid){
       .active = true,
       .size = size,
+      .start = position,
       .position = position,
       .rotation = GetRandomValue(0, 360),
       .velocity = velocity,
@@ -53,6 +54,18 @@ void DrawAsteroid(Asteroid asteroid) {
   DrawPolyLines(asteroid.position, 3, 16 * (int)asteroid.size,
                 asteroid.rotation, WHITE);
 }
+
+void TraceAsteroid(Asteroid asteroid) {
+  if (!asteroid.active) {
+    return;
+  }
+
+  Vector2 finalTarget =
+      Vector2Add(asteroid.position, Vector2Scale(asteroid.velocity, 10.0f));
+  DrawLineV(asteroid.start, finalTarget, GREEN);
+
+  Vector2 target = Vector2Add(asteroid.position, asteroid.velocity);
+  DrawLineV(asteroid.position, target, RED);
 }
 
 Vector2 GetRandomAsteroidVelocity(Vector2 position, Vector2 target) {

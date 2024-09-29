@@ -14,6 +14,7 @@ AsteroidSize GetRandomAsteroidSize(void);
 typedef struct Asteroid {
   bool active;
   AsteroidSize size;
+  Vector2 start;
   Vector2 position;
   float rotation;
   float rotationSpeed;
@@ -23,6 +24,7 @@ typedef struct Asteroid {
 Asteroid CreateAsteroid(AsteroidSize size, Vector2 position, Vector2 velocity);
 void UpdateAsteroid(Asteroid *asteroid, float deltaTime, Vector2 screenSize);
 void DrawAsteroid(Asteroid asteroid);
+void TraceAsteroid(Asteroid asteroid);
 
 Vector2 GetRandomAsteroidVelocity(Vector2 position, Vector2 target);
 

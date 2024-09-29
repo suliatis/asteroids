@@ -13,6 +13,8 @@
 AsteroidSize _asteroidSizes[] = {ASTEROID_SMALL, ASTEROID_MEDIUM,
                                  ASTEROID_LARGE};
 Asteroid _asteroids[MAX_ASTEROIDS] = {0};
+int _recentAsteroidIndex = -1;
+bool _isInDebugMode = true;
 
 void Init(void) {
 
@@ -31,8 +33,14 @@ void Draw(void) {
   BeginDrawing();
 
   ClearBackground(NEARBLACK);
+  if (_isInDebugMode) {
+    DrawCircleV(SCREEN_CENTER, 5, RED);
+  }
 
   for (int i = 0; i < MAX_ASTEROIDS; i++) {
+    if (_isInDebugMode) {
+      TraceAsteroid(_asteroids[i]);
+    }
     DrawAsteroid(_asteroids[i]);
   }
 
@@ -51,6 +59,7 @@ void AddAsteroid(void) {
     AsteroidSize size = GetRandomAsteroidSize();
 
     _asteroids[i] = CreateAsteroid(size, position, velocity);
+    _recentAsteroidIndex = i;
     created = true;
     break;
   }
