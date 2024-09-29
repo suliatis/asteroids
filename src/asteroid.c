@@ -26,7 +26,7 @@ Asteroid CreateAsteroid(AsteroidSize size, Vector2 position, Vector2 velocity) {
   };
 }
 
-void UpdateAsteroid(Asteroid *asteroid, float deltaTime) {
+void UpdateAsteroid(Asteroid *asteroid, float deltaTime, Vector2 screenSize) {
   if (!asteroid->active) {
     return;
   }
@@ -34,6 +34,16 @@ void UpdateAsteroid(Asteroid *asteroid, float deltaTime) {
   asteroid->position = Vector2Add(asteroid->position,
                                   Vector2Scale(asteroid->velocity, deltaTime));
   asteroid->rotation += asteroid->rotationSpeed * deltaTime;
+
+  int size = (int)asteroid->size * 16;
+  if (asteroid->position.x + size < 0)
+    asteroid->active = false;
+  else if (asteroid->position.x - size > screenSize.x)
+    asteroid->active = false;
+  else if (asteroid->position.y + size < 0)
+    asteroid->active = false;
+  else if (asteroid->position.y - size > screenSize.y)
+    asteroid->active = false;
 }
 
 void DrawAsteroid(Asteroid asteroid) {

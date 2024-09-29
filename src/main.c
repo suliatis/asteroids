@@ -23,7 +23,7 @@ void Init(void) {
 
 void Update(void) {
   for (int i = 0; i < MAX_ASTEROIDS; i++) {
-    UpdateAsteroid(_asteroids + i, GetFrameTime());
+    UpdateAsteroid(_asteroids + i, GetFrameTime(), SCREEN_SIZE);
   }
 }
 
