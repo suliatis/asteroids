@@ -23,9 +23,27 @@ void Init(void) {
   SetTargetFPS(60);
 }
 
+void AddAsteroid(void) {
+  bool created = false;
+  for (int i = 0; i < MAX_ASTEROIDS; i++) {
+    if (_asteroids[i].active) {
+      continue;
+    }
+
+    _asteroids[i] = AsteroidSpawn(GetMousePosition(), SCREEN_CENTER);
+    _recentAsteroidIndex = i;
+    created = true;
+    break;
+  }
+
+  if (!created) {
+    TraceLog(LOG_ERROR, "Can't create more asteroids!");
+  }
+}
+
 void Update(void) {
   for (int i = 0; i < MAX_ASTEROIDS; i++) {
-    UpdateAsteroid(_asteroids + i, GetFrameTime(), SCREEN_SIZE);
+    AsteroidUpdate(_asteroids + i, GetFrameTime(), SCREEN_SIZE);
   }
 }
 
@@ -39,35 +57,14 @@ void Draw(void) {
 
   for (int i = 0; i < MAX_ASTEROIDS; i++) {
     if (_isInDebugMode) {
-      TraceAsteroid(_asteroids[i]);
+      AsteroidDrawTracing(_asteroids[i]);
     }
-    DrawAsteroid(_asteroids[i]);
+    AsteroidDraw(_asteroids[i]);
   }
 
   EndDrawing();
 }
 
-void AddAsteroid(void) {
-  bool created = false;
-  for (int i = 0; i < MAX_ASTEROIDS; i++) {
-    if (_asteroids[i].active) {
-      continue;
-    }
-
-    Vector2 position = GetMousePosition();
-    Vector2 velocity = GetRandomAsteroidVelocity(position, SCREEN_CENTER);
-    AsteroidSize size = GetRandomAsteroidSize();
-
-    _asteroids[i] = CreateAsteroid(size, position, velocity);
-    _recentAsteroidIndex = i;
-    created = true;
-    break;
-  }
-
-  if (!created) {
-    TraceLog(LOG_ERROR, "Can't create more asteroids!");
-  }
-}
 
 int main(void) {
   Init();

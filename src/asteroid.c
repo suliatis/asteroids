@@ -10,24 +10,27 @@
 #define ASTEROID_MAX_SPEED 300
 #define ASTEROID_ANGLE_OFFSET 30
 
-AsteroidSize GetRandomAsteroidSize(void) {
-  return (AsteroidSize)GetRandomValue(1, 3);
-}
+Asteroid AsteroidSpawn(Vector2 position, Vector2 target) {
+  Vector2 direction = Vector2Normalize(Vector2Subtract(target, position));
+  Vector2 velocity = Vector2Scale(
+      direction, GetRandomValue(ASTEROID_MIN_SPEED, ASTEROID_MAX_SPEED));
+  Vector2 offsetVelocity = Vector2Rotate(
+      velocity,
+      GetRandomValue(-ASTEROID_ANGLE_OFFSET, ASTEROID_ANGLE_OFFSET) * DEG2RAD);
 
-Asteroid CreateAsteroid(AsteroidSize size, Vector2 position, Vector2 velocity) {
   return (Asteroid){
       .active = true,
-      .size = size,
+      .size = (AsteroidSize)GetRandomValue(1, 3),
       .start = position,
       .position = position,
       .rotation = GetRandomValue(0, 360),
-      .velocity = velocity,
+      .velocity = offsetVelocity,
       .rotationSpeed = GetRandomValue(ASTEROID_ROTATION_SPEED_MIN,
                                       ASTEROID_ROTATION_SPEED_MAX),
   };
 }
 
-void UpdateAsteroid(Asteroid *asteroid, float deltaTime, Vector2 screenSize) {
+void AsteroidUpdate(Asteroid *asteroid, float deltaTime, Vector2 screenSize) {
   if (!asteroid->active) {
     return;
   }
@@ -47,7 +50,7 @@ void UpdateAsteroid(Asteroid *asteroid, float deltaTime, Vector2 screenSize) {
     asteroid->active = false;
 }
 
-void DrawAsteroid(Asteroid asteroid) {
+void AsteroidDraw(Asteroid asteroid) {
   if (!asteroid.active) {
     return;
   }
@@ -55,7 +58,7 @@ void DrawAsteroid(Asteroid asteroid) {
                 asteroid.rotation, WHITE);
 }
 
-void TraceAsteroid(Asteroid asteroid) {
+void AsteroidDrawTracing(Asteroid asteroid) {
   if (!asteroid.active) {
     return;
   }
@@ -66,14 +69,4 @@ void TraceAsteroid(Asteroid asteroid) {
 
   Vector2 target = Vector2Add(asteroid.position, asteroid.velocity);
   DrawLineV(asteroid.position, target, RED);
-}
-
-Vector2 GetRandomAsteroidVelocity(Vector2 position, Vector2 target) {
-  Vector2 direction = Vector2Normalize(Vector2Subtract(target, position));
-  Vector2 velocity = Vector2Scale(
-      direction, GetRandomValue(ASTEROID_MIN_SPEED, ASTEROID_MAX_SPEED));
-  Vector2 offsetVelocity = Vector2Rotate(
-      velocity,
-      GetRandomValue(-ASTEROID_ANGLE_OFFSET, ASTEROID_ANGLE_OFFSET) * DEG2RAD);
-  return offsetVelocity;
 }
