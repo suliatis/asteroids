@@ -11,6 +11,25 @@
 #define ASTEROID_ANGLE_OFFSET 30
 
 Asteroid AsteroidSpawn(Vector2 position, Vector2 target) {
+  AsteroidSpawnDirection spawnDirection =
+      (AsteroidSpawnDirection)(GetRandomValue(1, 4));
+  Vector2 spawnPosition = {-128, -128};
+  if (spawnDirection == ASTEROID_SPAWN_UP) {
+    spawnPosition.x = GetRandomValue(0, 800);
+  }
+  if (spawnDirection == ASTEROID_SPAWN_DOWN) {
+    spawnPosition.x = GetRandomValue(0, 800);
+    spawnPosition.y = 480 + 128;
+  }
+  if (spawnDirection == ASTEROID_SPAWN_LEFT) {
+    spawnPosition.y = GetRandomValue(0, 480);
+  }
+  if (spawnDirection == ASTEROID_SPAWN_RIGHT) {
+    spawnPosition.x = 800 + 128;
+    spawnPosition.y = GetRandomValue(0, 480);
+  }
+  position = spawnPosition;
+
   Vector2 direction = Vector2Normalize(Vector2Subtract(target, position));
   Vector2 velocity = Vector2Scale(
       direction, GetRandomValue(ASTEROID_MIN_SPEED, ASTEROID_MAX_SPEED));

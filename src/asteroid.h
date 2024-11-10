@@ -9,6 +9,13 @@ typedef enum AsteroidSize {
   ASTEROID_LARGE = 3
 } AsteroidSize;
 
+typedef enum AsteroidSpawnDirection {
+  ASTEROID_SPAWN_UP = 1,
+  ASTEROID_SPAWN_DOWN = 2,
+  ASTEROID_SPAWN_LEFT = 3,
+  ASTEROID_SPAWN_RIGHT = 4
+} AsteroidSpawnDirection;
+
 typedef struct Asteroid {
   bool active;
   AsteroidSize size;
