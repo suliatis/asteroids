@@ -9,6 +9,12 @@ typedef enum AsteroidSize {
   ASTEROID_LARGE = 3
 } AsteroidSize;
 
+typedef enum AsteroidState {
+  ASTEROID_CEASED = 0,
+  ASTEROID_SPAWNED = 1,
+  ASTEROID_ACTIVE = 2,
+} AsteroidState;
+
 typedef enum AsteroidSpawnDirection {
   ASTEROID_SPAWN_UP = 1,
   ASTEROID_SPAWN_DOWN = 2,
@@ -17,7 +23,7 @@ typedef enum AsteroidSpawnDirection {
 } AsteroidSpawnDirection;
 
 typedef struct Asteroid {
-  bool active;
+  AsteroidState state;
   AsteroidSize size;
   Vector2 start;
   Vector2 position;

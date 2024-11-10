@@ -38,7 +38,7 @@ Asteroid AsteroidSpawn(Vector2 position, Vector2 target) {
       GetRandomValue(-ASTEROID_ANGLE_OFFSET, ASTEROID_ANGLE_OFFSET) * DEG2RAD);
 
   return (Asteroid){
-      .active = true,
+      .state = ASTEROID_SPAWNED,
       .size = (AsteroidSize)GetRandomValue(1, 3),
       .start = position,
       .position = position,
@@ -50,7 +50,7 @@ Asteroid AsteroidSpawn(Vector2 position, Vector2 target) {
 }
 
 void AsteroidUpdate(Asteroid *asteroid, float deltaTime, Vector2 screenSize) {
-  if (!asteroid->active) {
+  if (asteroid->state == ASTEROID_CEASED) {
     return;
   }
 
@@ -58,19 +58,21 @@ void AsteroidUpdate(Asteroid *asteroid, float deltaTime, Vector2 screenSize) {
                                   Vector2Scale(asteroid->velocity, deltaTime));
   asteroid->rotation += asteroid->rotationSpeed * deltaTime;
 
-  int size = (int)asteroid->size * 16;
-  if (asteroid->position.x + size < 0)
-    asteroid->active = false;
-  else if (asteroid->position.x - size > screenSize.x)
-    asteroid->active = false;
-  else if (asteroid->position.y + size < 0)
-    asteroid->active = false;
-  else if (asteroid->position.y - size > screenSize.y)
-    asteroid->active = false;
+  if (asteroid->state == ASTEROID_ACTIVE) {
+    if (asteroid->position.x < -128 || asteroid->position.x > screenSize.x + 128 ||
+        asteroid->position.y < -128 || asteroid->position.y > screenSize.y + 128) {
+      asteroid->state = ASTEROID_CEASED;
+    }
+  } else {
+    if (asteroid->position.x > 0 && asteroid->position.x < screenSize.x &&
+        asteroid->position.y > 0 && asteroid->position.y < screenSize.y) {
+      asteroid->state = ASTEROID_ACTIVE;
+    }
+  }
 }
 
 void AsteroidDraw(Asteroid asteroid) {
-  if (!asteroid.active) {
+  if (asteroid.state == ASTEROID_CEASED) {
     return;
   }
   DrawPolyLines(asteroid.position, 3, 16 * (int)asteroid.size,
@@ -78,7 +80,7 @@ void AsteroidDraw(Asteroid asteroid) {
 }
 
 void AsteroidDrawTracing(Asteroid asteroid) {
-  if (!asteroid.active) {
+  if (asteroid.state == ASTEROID_CEASED) {
     return;
   }
 
