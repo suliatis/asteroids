@@ -8,8 +8,6 @@
   CLITERAL(Color) { 15, 15, 15, 255 }
 
 #define MAX_ASTEROIDS 64
-AsteroidSize _asteroidSizes[] = {ASTEROID_SMALL, ASTEROID_MEDIUM,
-                                 ASTEROID_LARGE};
 Asteroid _asteroids[MAX_ASTEROIDS] = {0};
 int _recentAsteroidIndex = -1;
 bool _isInDebugMode = true;
