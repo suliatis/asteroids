@@ -3,6 +3,8 @@
 #include <raylib.h>
 #include <raymath.h>
 
+#include "window.h"
+
 #define ASTEROID_ROTATION_SPEED_MIN 5
 #define ASTEROID_ROTATION_SPEED_MAX 240
 
@@ -49,7 +51,7 @@ Asteroid AsteroidSpawn(Vector2 position, Vector2 target) {
   };
 }
 
-void AsteroidUpdate(Asteroid *asteroid, float deltaTime, Vector2 screenSize) {
+void AsteroidUpdate(Asteroid *asteroid, float deltaTime) {
   if (asteroid->state == ASTEROID_CEASED) {
     return;
   }
@@ -59,13 +61,13 @@ void AsteroidUpdate(Asteroid *asteroid, float deltaTime, Vector2 screenSize) {
   asteroid->rotation += asteroid->rotationSpeed * deltaTime;
 
   if (asteroid->state == ASTEROID_ACTIVE) {
-    if (asteroid->position.x < -128 || asteroid->position.x > screenSize.x + 128 ||
-        asteroid->position.y < -128 || asteroid->position.y > screenSize.y + 128) {
+    if (asteroid->position.x < -128 || asteroid->position.x > WINDOW_SIZE.x + 128 ||
+        asteroid->position.y < -128 || asteroid->position.y > WINDOW_SIZE.y + 128) {
       asteroid->state = ASTEROID_CEASED;
     }
   } else {
-    if (asteroid->position.x > 0 && asteroid->position.x < screenSize.x &&
-        asteroid->position.y > 0 && asteroid->position.y < screenSize.y) {
+    if (asteroid->position.x > 0 && asteroid->position.x < WINDOW_SIZE.x &&
+        asteroid->position.y > 0 && asteroid->position.y < WINDOW_SIZE.y) {
       asteroid->state = ASTEROID_ACTIVE;
     }
   }

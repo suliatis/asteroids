@@ -1,13 +1,11 @@
 #include <raylib.h>
 #include <raymath.h>
 
+#include "window.h"
 #include "asteroid.h"
 
 #define NEARBLACK                                                              \
   CLITERAL(Color) { 15, 15, 15, 255 }
-
-#define SCREEN_SIZE CLITERAL(Vector2) {800, 450}
-#define SCREEN_CENTER Vector2Scale(SCREEN_SIZE, 0.5f)
 
 #define MAX_ASTEROIDS 64
 AsteroidSize _asteroidSizes[] = {ASTEROID_SMALL, ASTEROID_MEDIUM,
@@ -18,7 +16,7 @@ bool _isInDebugMode = true;
 
 void Init(void) {
 
-  InitWindow(SCREEN_SIZE.x, SCREEN_SIZE.y, "Asteroids");
+  InitWindow(WINDOW_SIZE.x, WINDOW_SIZE.y, "Asteroids");
 
   SetTargetFPS(60);
 }
@@ -30,7 +28,7 @@ void AddAsteroid(void) {
       continue;
     }
 
-    _asteroids[i] = AsteroidSpawn(GetMousePosition(), SCREEN_CENTER);
+    _asteroids[i] = AsteroidSpawn(GetMousePosition(), WINDOW_CENTER);
     _recentAsteroidIndex = i;
     created = true;
     break;
@@ -43,7 +41,7 @@ void AddAsteroid(void) {
 
 void Update(void) {
   for (int i = 0; i < MAX_ASTEROIDS; i++) {
-    AsteroidUpdate(_asteroids + i, GetFrameTime(), SCREEN_SIZE);
+    AsteroidUpdate(_asteroids + i, GetFrameTime());
   }
 }
 
@@ -52,7 +50,7 @@ void Draw(void) {
 
   ClearBackground(NEARBLACK);
   if (_isInDebugMode) {
-    DrawCircleV(SCREEN_CENTER, 5, RED);
+    DrawCircleV(WINDOW_CENTER, 5, RED);
   }
 
   for (int i = 0; i < MAX_ASTEROIDS; i++) {
