@@ -1,16 +1,10 @@
+#include "asteroids.h"
+#include "trace.h"
+#include "window.h"
 #include <raylib.h>
 #include <raymath.h>
 
-#include "window.h"
-#include "asteroid.h"
-
-#define NEARBLACK                                                              \
-  CLITERAL(Color) { 15, 15, 15, 255 }
-
-#define MAX_ASTEROIDS 64
-Asteroid _asteroids[MAX_ASTEROIDS] = {0};
-int _recentAsteroidIndex = -1;
-bool _isInDebugMode = true;
+#define NEARBLACK CLITERAL(Color){15, 15, 15, 255}
 
 void Init(void) {
 
@@ -19,57 +13,25 @@ void Init(void) {
   SetTargetFPS(60);
 }
 
-void AddAsteroid(void) {
-  bool created = false;
-  for (int i = 0; i < MAX_ASTEROIDS; i++) {
-    if (_asteroids[i].state != ASTEROID_INACTIVE) {
-      continue;
-    }
+void Update(void) { AsteroidsUpdate(); }
 
-    _asteroids[i] = AsteroidSpawn();
-    _recentAsteroidIndex = i;
-    created = true;
-    break;
-  }
-
-  if (!created) {
-    TraceLog(LOG_ERROR, "Can't create more asteroids!");
-  }
-}
-
-void Update(void) {
-  for (int i = 0; i < MAX_ASTEROIDS; i++) {
-    AsteroidUpdate(_asteroids + i, GetFrameTime());
-  }
-}
-
-void Draw(void) {
+void Draw() {
   BeginDrawing();
 
   ClearBackground(NEARBLACK);
-  if (_isInDebugMode) {
+  if (TraceIsEnabled()) {
     DrawCircleV(WINDOW_CENTER, 5, RED);
   }
 
-  for (int i = 0; i < MAX_ASTEROIDS; i++) {
-    if (_isInDebugMode) {
-      AsteroidDrawTracing(_asteroids[i]);
-    }
-    AsteroidDraw(_asteroids[i]);
-  }
+  AsteroidsDraw();
 
   EndDrawing();
 }
-
 
 int main(void) {
   Init();
 
   while (!WindowShouldClose()) {
-    // Add ~2 new asteroids in every second
-    if (GetRandomValue(1, 30) == 1) {
-      AddAsteroid();
-    }
     Update();
     Draw();
   }
