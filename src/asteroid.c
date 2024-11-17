@@ -39,7 +39,7 @@ Asteroid AsteroidSpawn() {
       GetRandomValue(-ASTEROID_ANGLE_OFFSET, ASTEROID_ANGLE_OFFSET) * DEG2RAD);
 
   return (Asteroid){
-      .state = ASTEROID_SPAWNED,
+      .state = ASTEROID_HIDDEN,
       .size = (AsteroidSize)GetRandomValue(1, 3),
       .start = position,
       .position = position,
@@ -51,7 +51,7 @@ Asteroid AsteroidSpawn() {
 }
 
 void AsteroidUpdate(Asteroid *asteroid, float deltaTime) {
-  if (asteroid->state == ASTEROID_CEASED) {
+  if (asteroid->state == ASTEROID_INACTIVE) {
     return;
   }
 
@@ -62,7 +62,7 @@ void AsteroidUpdate(Asteroid *asteroid, float deltaTime) {
   if (asteroid->state == ASTEROID_ACTIVE) {
     if (asteroid->position.x < -128 || asteroid->position.x > WINDOW_SIZE.x + 128 ||
         asteroid->position.y < -128 || asteroid->position.y > WINDOW_SIZE.y + 128) {
-      asteroid->state = ASTEROID_CEASED;
+      asteroid->state = ASTEROID_INACTIVE;
     }
   } else {
     if (asteroid->position.x > 0 && asteroid->position.x < WINDOW_SIZE.x &&
@@ -73,7 +73,7 @@ void AsteroidUpdate(Asteroid *asteroid, float deltaTime) {
 }
 
 void AsteroidDraw(Asteroid asteroid) {
-  if (asteroid.state == ASTEROID_CEASED) {
+  if (asteroid.state == ASTEROID_INACTIVE) {
     return;
   }
   DrawPolyLines(asteroid.position, 3, 16 * (int)asteroid.size,
@@ -81,7 +81,7 @@ void AsteroidDraw(Asteroid asteroid) {
 }
 
 void AsteroidDrawTracing(Asteroid asteroid) {
-  if (asteroid.state == ASTEROID_CEASED) {
+  if (asteroid.state == ASTEROID_INACTIVE) {
     return;
   }
 

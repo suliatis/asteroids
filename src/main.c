@@ -22,7 +22,7 @@ void Init(void) {
 void AddAsteroid(void) {
   bool created = false;
   for (int i = 0; i < MAX_ASTEROIDS; i++) {
-    if (_asteroids[i].state != ASTEROID_CEASED) {
+    if (_asteroids[i].state != ASTEROID_INACTIVE) {
       continue;
     }
 

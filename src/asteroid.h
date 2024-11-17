@@ -10,8 +10,8 @@ typedef enum AsteroidSize {
 } AsteroidSize;
 
 typedef enum AsteroidState {
-  ASTEROID_CEASED = 0,
-  ASTEROID_SPAWNED = 1,
+  ASTEROID_INACTIVE = 0,
+  ASTEROID_HIDDEN = 1,
   ASTEROID_ACTIVE = 2,
 } AsteroidState;
 
