@@ -26,7 +26,7 @@ void AddAsteroid(void) {
       continue;
     }
 
-    _asteroids[i] = AsteroidSpawn(WINDOW_CENTER);
+    _asteroids[i] = AsteroidSpawn();
     _recentAsteroidIndex = i;
     created = true;
     break;

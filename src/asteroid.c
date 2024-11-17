@@ -12,7 +12,7 @@
 #define ASTEROID_MAX_SPEED 300
 #define ASTEROID_ANGLE_OFFSET 30
 
-Asteroid AsteroidSpawn(Vector2 target) {
+Asteroid AsteroidSpawn() {
   AsteroidSpawnDirection spawnDirection =
       (AsteroidSpawnDirection)(GetRandomValue(1, 4));
   Vector2 position = {-128, -128};
@@ -31,7 +31,7 @@ Asteroid AsteroidSpawn(Vector2 target) {
     position.y = GetRandomValue(0, 480);
   }
 
-  Vector2 direction = Vector2Normalize(Vector2Subtract(target, position));
+  Vector2 direction = Vector2Normalize(Vector2Subtract(WINDOW_CENTER, position));
   Vector2 velocity = Vector2Scale(
       direction, GetRandomValue(ASTEROID_MIN_SPEED, ASTEROID_MAX_SPEED));
   Vector2 offsetVelocity = Vector2Rotate(
