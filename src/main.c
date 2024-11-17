@@ -66,7 +66,8 @@ int main(void) {
   Init();
 
   while (!WindowShouldClose()) {
-    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+    // Add ~2 new asteroids in every second
+    if (GetRandomValue(1, 30) == 1) {
       AddAsteroid();
     }
     Update();
