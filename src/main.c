@@ -3,6 +3,8 @@
 #include "window.h"
 #include <raylib.h>
 #include <raymath.h>
+#define RAYGUI_IMPLEMENTATION
+#include "raygui.h"
 
 #define NEARBLACK CLITERAL(Color){15, 15, 15, 255}
 
@@ -17,6 +19,8 @@ void Update(void) { AsteroidsUpdate(); }
 
 void Draw() {
   BeginDrawing();
+
+  GuiLabel((Rectangle){10, 10, 100, 20}, "Asteroids");
 
   ClearBackground(NEARBLACK);
   if (TraceIsEnabled()) {
