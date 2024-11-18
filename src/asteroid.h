@@ -32,7 +32,7 @@ typedef struct Asteroid {
   Vector2 velocity;
 } Asteroid;
 
-Asteroid AsteroidSpawn();
+Asteroid AsteroidSpawn(void);
 void AsteroidUpdate(Asteroid *asteroid, float deltaTime);
 void AsteroidDraw(Asteroid asteroid);
 void AsteroidDrawTracing(Asteroid asteroid);

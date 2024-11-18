@@ -3,10 +3,10 @@
 
 #include <stdbool.h>
 
-void TraceDraw();
+void TraceDraw(void);
 
-bool TraceToggle();
-bool TraceIsEnabled();
-bool TraceIsDisabled();
+bool TraceToggle(void);
+bool TraceIsEnabled(void);
+bool TraceIsDisabled(void);
 
 #endif

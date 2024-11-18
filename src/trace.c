@@ -19,15 +19,19 @@ void _DrawTraceToggleButton() {
   }
 }
 
-void TraceDraw() {
+void TraceDraw(void) {
   _DrawTraceToggleButton();
 }
 
-bool TraceToggle() {
+bool TraceToggle(void) {
   enabled = !enabled;
   return enabled;
 }
 
-bool TraceIsEnabled() { return enabled; }
+bool TraceIsEnabled(void) {
+  return enabled;
+}
 
-bool TraceIsDisabled() { return !enabled; }
+bool TraceIsDisabled(void) {
+  return !enabled;
+}

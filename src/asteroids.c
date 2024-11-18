@@ -8,7 +8,7 @@
 
 Asteroid asteroids[MAX_ASTEROIDS] = {0};
 
-void AsteroidsUpdate() {
+void AsteroidsUpdate(void) {
   // Add ~2 new asteroids in every second
   // TODO Loop fusion?
   if (GetRandomValue(1, 30) == 1) {
@@ -33,7 +33,7 @@ void AsteroidsUpdate() {
   }
 }
 
-void AsteroidsDraw() {
+void AsteroidsDraw(void) {
   for (int i = 0; i < MAX_ASTEROIDS; i++) {
     if (TraceIsEnabled()) {
       AsteroidDrawTracing(asteroids[i]);

@@ -17,7 +17,7 @@ void Init(void) {
 
 void Update(void) { AsteroidsUpdate(); }
 
-void Draw() {
+void Draw(void) {
   BeginDrawing();
 
   ClearBackground(NEARBLACK);

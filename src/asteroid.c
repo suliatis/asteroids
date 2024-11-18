@@ -12,7 +12,7 @@
 #define ASTEROID_MAX_SPEED 300
 #define ASTEROID_ANGLE_OFFSET 30
 
-Asteroid AsteroidSpawn() {
+Asteroid AsteroidSpawn(void) {
   AsteroidSpawnDirection spawnDirection =
       (AsteroidSpawnDirection)(GetRandomValue(1, 4));
   Vector2 position = {-128, -128};
