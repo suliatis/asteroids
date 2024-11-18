@@ -20,14 +20,13 @@ void Update(void) { AsteroidsUpdate(); }
 void Draw() {
   BeginDrawing();
 
-  GuiLabel((Rectangle){10, 10, 100, 20}, "Asteroids");
-
   ClearBackground(NEARBLACK);
   if (TraceIsEnabled()) {
     DrawCircleV(WINDOW_CENTER, 5, RED);
   }
 
   AsteroidsDraw();
+  TraceDraw();
 
   EndDrawing();
 }

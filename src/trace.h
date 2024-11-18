@@ -3,6 +3,8 @@
 
 #include <stdbool.h>
 
+void TraceDraw();
+
 bool TraceToggle();
 bool TraceIsEnabled();
 bool TraceIsDisabled();
