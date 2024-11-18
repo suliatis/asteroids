@@ -2,7 +2,10 @@
 
 #include "asteroid.h"
 #include "trace.h"
+#include <raygui.h>
 #include <raylib.h>
+#include <string.h>
+#include <stdio.h>
 
 #define MAX_ASTEROIDS 64
 
@@ -33,7 +36,29 @@ void AsteroidsUpdate(void) {
   }
 }
 
+int _CountActive(void) {
+  int count = 0;
+  for (int i = 0; i < MAX_ASTEROIDS; i++) {
+    if (asteroids[i].state == ASTEROID_INACTIVE) {
+      continue;
+    }
+    count++;
+  }
+  return count;
+}
+
+void _DrawCounter_TraceUI(void) {
+  char buffer[24];
+  sprintf(buffer, "Active asteroids: %d", _CountActive());
+
+  GuiLabel((Rectangle){10, 10, 100, 20}, buffer);
+}
+
 void AsteroidsDraw(void) {
+  if (TraceIsEnabled()) {
+    _DrawCounter_TraceUI();
+  }
+
   for (int i = 0; i < MAX_ASTEROIDS; i++) {
     if (TraceIsEnabled()) {
       AsteroidDrawTracing(asteroids[i]);
