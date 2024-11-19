@@ -4,8 +4,8 @@
 #include "trace.h"
 #include <raygui.h>
 #include <raylib.h>
-#include <string.h>
 #include <stdio.h>
+#include <string.h>
 
 #define MAX_ASTEROIDS 64
 
@@ -48,10 +48,8 @@ int _CountActive(void) {
 }
 
 void _DrawCounter_TraceUI(void) {
-  char** buffer;
-  asprintf(buffer, "Active asteroids: %d", _CountActive());
-
-  GuiLabel((Rectangle){10, 10, 100, 20}, *buffer);
+  const char *text = TextFormat("ASTEROIDS: %d", _CountActive());
+  GuiLabel((Rectangle){10, 10, 100, 20}, text);
 }
 
 void AsteroidsDraw(void) {
