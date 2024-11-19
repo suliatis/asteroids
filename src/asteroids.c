@@ -48,10 +48,10 @@ int _CountActive(void) {
 }
 
 void _DrawCounter_TraceUI(void) {
-  char buffer[24];
-  sprintf(buffer, "Active asteroids: %d", _CountActive());
+  char** buffer;
+  asprintf(buffer, "Active asteroids: %d", _CountActive());
 
-  GuiLabel((Rectangle){10, 10, 100, 20}, buffer);
+  GuiLabel((Rectangle){10, 10, 100, 20}, *buffer);
 }
 
 void AsteroidsDraw(void) {
