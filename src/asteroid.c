@@ -10,7 +10,7 @@
 
 #define ASTEROID_MIN_SPEED 100
 #define ASTEROID_MAX_SPEED 300
-#define ASTEROID_ANGLE_OFFSET 30
+#define ASTEROID_ANGLE_OFFSET 20
 
 Asteroid AsteroidSpawn(void) {
   AsteroidSpawnDirection spawnDirection =
