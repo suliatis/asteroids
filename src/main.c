@@ -1,4 +1,5 @@
 #include "asteroids.h"
+#include "player.h"
 #include "trace.h"
 #include "window.h"
 #include <raylib.h>
@@ -8,14 +9,21 @@
 
 #define NEARBLACK CLITERAL(Color){15, 15, 15, 255}
 
+Player player;
+
 void Init(void) {
 
   InitWindow(WINDOW_SIZE.x, WINDOW_SIZE.y, "Asteroids");
 
   SetTargetFPS(60);
+
+  player = PlayerSpawn();
 }
 
-void Update(void) { AsteroidsUpdate(); }
+void Update(void) { 
+  PlayerUpdate(&player, GetFrameTime());
+  AsteroidsUpdate();
+}
 
 void Draw(void) {
   BeginDrawing();
@@ -25,6 +33,7 @@ void Draw(void) {
     DrawCircleV(WINDOW_CENTER, 5, RED);
   }
 
+  PlayerDraw(player);
   AsteroidsDraw();
   TraceDraw();
 
